@@ -1,5 +1,6 @@
 package com.example.cookieclicker
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,7 +9,8 @@ import android.widget.ImageButton
 import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
-    val cookieData = CookieData()
+    var cookieData = CookieData()
+    val upgradeRequestCode = 10
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -28,7 +30,17 @@ class MainActivity : AppCompatActivity() {
         button.setOnClickListener {
             val intent = Intent(this, UpgradesActivity::class.java)
             intent.putExtra("cookieData", cookieData)
-            startActivity(intent)
+            startActivityForResult(intent, upgradeRequestCode)
         }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == upgradeRequestCode && resultCode == Activity.RESULT_OK){
+            cookieData = data!!.getSerializableExtra("cookieData") as CookieData
+        }
+
+    }
+
+
 }
