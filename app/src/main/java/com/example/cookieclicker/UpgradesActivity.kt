@@ -4,8 +4,10 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class UpgradesActivity : AppCompatActivity(){
@@ -25,12 +27,13 @@ class UpgradesActivity : AppCompatActivity(){
         upgradeClickTextView = findViewById(R.id.clickUpgradeText)
         refreshTextViews()
         setExitButton()
+        initClickUpgradeButton()
     }
     fun refreshTextViews(){
         autoClickerTextView.text = "Autoclicker upgrade level: ${cookieData.autoClickerUpgradeLevel}\n" + "Upgrade cost: xxx"
         workersTextView.text = "Working works: ${cookieData.workersUpgradeLevel}\nWorker cost: xxx"
         bakeriesTextView.text = "Baking bakeries: ${cookieData.bakeriesUpgradeLevel}\nBakery cost: xxx"
-        upgradeClickTextView.text = "Upgrade click level: ${cookieData.clickUpgradeLevel}\nUpgrade cost: xxx"
+        upgradeClickTextView.text = "Upgrade click level: ${cookieData.clickUpgradeLevel}\nUpgrade cost: ${cookieData.getClickUpgPrice()}"
     }
 
     fun setExitButton(){
@@ -42,6 +45,17 @@ class UpgradesActivity : AppCompatActivity(){
             finish()
         }
     }
-
-
+    fun initClickUpgradeButton(){
+        val clickUpgradeButton = findViewById<Button>(R.id.clickUpgradeButton)
+        clickUpgradeButton.setOnClickListener{
+            if( cookieData.cookiesCounter>= cookieData.getClickUpgPrice()){
+                cookieData.cookiesCounter -= cookieData.getClickUpgPrice()
+                cookieData.clickUpgradeLevel += 1
+                cookieData.calculateClickValue()
+                refreshTextViews()
+            }else{
+                Toast.makeText(applicationContext, "You cannot buy this upgrade!", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
 }
