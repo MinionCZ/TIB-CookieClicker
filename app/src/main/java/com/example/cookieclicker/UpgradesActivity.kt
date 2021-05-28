@@ -28,6 +28,7 @@ class UpgradesActivity : AppCompatActivity(){
         refreshTextViews()
         setExitButton()
         initClickUpgradeButton()
+        handleAutoClickerUpgrade()
     }
     fun refreshTextViews(){
         autoClickerTextView.text = "Autoclicker upgrade level: ${cookieData.autoClickerUpgradeLevel}\n" + "Upgrade cost: xxx"
@@ -58,4 +59,47 @@ class UpgradesActivity : AppCompatActivity(){
             }
         }
     }
+
+    fun handleAutoClickerUpgrade() {
+        findViewById<Button>(R.id.autoClickerButton).setOnClickListener {
+            if (cookieData.cookiesCounter >= cookieData.autoClickerPrice) {
+                cookieData.updateAutoClicker()
+                refreshTextViews()
+            } else {
+                Toast.makeText(
+                    applicationContext,
+                    "You cannot buy this upgrade!",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+
+        findViewById<Button>(R.id.workersButton).setOnClickListener {
+            if (cookieData.cookiesCounter >= cookieData.workersPrice) {
+                cookieData.updateWorkers()
+                refreshTextViews()
+            } else {
+                Toast.makeText(
+                    applicationContext,
+                    "You cannot buy this upgrade!",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+
+        findViewById<Button>(R.id.bakeriesButton).setOnClickListener {
+            if (cookieData.cookiesCounter >= cookieData.bakeriesPrice) {
+                cookieData.updateBakeries()
+                refreshTextViews()
+            } else {
+                Toast.makeText(
+                    applicationContext,
+                    "You cannot buy this upgrade!",
+                    Toast.LENGTH_LONG
+                ).show()
+
+            }
+        }
+    }
+
 }
