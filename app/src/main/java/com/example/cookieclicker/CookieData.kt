@@ -19,6 +19,10 @@ class CookieData : Serializable {
     var autoClickerPrice = 500
     var workersPrice = 2000
     var bakeriesPrice = 5000
+    private var autoclickValue = 1
+    private var workerValue = 4
+    private var bakeriesValue = 10
+    
 
 
     override fun toString(): String {
@@ -41,6 +45,7 @@ class CookieData : Serializable {
     }
 
     fun updateAutoClicker() {
+
         cookiesCounter -= autoClickerPrice
         var tmp = autoClickerPrice.toDouble()
         tmp *= autoClickerPriceCoef

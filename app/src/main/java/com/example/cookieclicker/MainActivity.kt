@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.os.SystemClock
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
@@ -50,15 +52,17 @@ class MainActivity : AppCompatActivity() {
 
     fun initTimer() {
         timer = Runnable {
-            cookieData.cookiesCounter += cookieData.cookiesPerSecond
-            refreshCookieView()
-            handler.postDelayed(timer, secondInMillis)
+                cookieData.cookiesCounter += cookieData.cookiesPerSecond
+                refreshCookieView()
+                handler.postDelayed(timer, 1000)
         }
-        handler.postDelayed(timer, secondInMillis)
+        handler.postDelayed(timer, 1000)
     }
 
     fun refreshCookieView() {
         val cookiesTextView: TextView = findViewById(R.id.cookieTextArea)
         cookiesTextView.text = "Cookies count: ${cookieData.cookiesCounter}"
+        Log.i("App", "tick")
+
     }
 }
